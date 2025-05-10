@@ -1,0 +1,91 @@
+Login (User)
+Primary Key: user_id
+
+A user can be either a guest or a host (or both).
+
+Relationships:
+
+One-to-many with Bookings (as guest)
+
+One-to-many with Properties (as host)
+
+One-to-many with Messages (sent/received)
+
+One-to-many with Reviews (they write)
+
+One-to-many with Payments (they make)
+
+🏠 Property
+Primary Key: property_id
+
+Foreign Key: host_id → User.user_id
+
+Relationships:
+
+Many-to-one with User (host)
+
+One-to-many with Bookings
+
+One-to-many with Messages (inquiry context)
+
+One-to-many with Reviews (through bookings)
+
+📅 Booking
+Primary Key: booking_id
+
+Foreign Keys:
+
+guest_id → User.user_id
+
+property_id → Property.property_id
+
+Relationships:
+
+Many-to-one with User (guest)
+
+Many-to-one with Property
+
+One-to-one with Payment
+
+One-to-one or one-to-many with Reviews
+
+One-to-many with Messages (booking-related discussion)
+
+💳 Payment
+Primary Key: payment_id
+
+Foreign Key: booking_id → Booking.booking_id
+
+Relationships:
+
+One-to-one with Booking
+
+✍️ Review
+Primary Key: review_id
+
+Foreign Key: booking_id → Booking.booking_id
+
+Relationships:
+
+Many-to-one with Booking
+
+Indirect relationship to User and Property through booking
+
+💬 Message
+Primary Key: message_id
+
+Foreign Keys:
+
+sender_id → User.user_id
+
+receiver_id → User.user_id
+
+Optional: booking_id → Booking.booking_id
+
+Optional: property_id → Property.property_id
+
+Relationships:
+
+Many-to-one with User (sender and receiver)
+
+Optional link to Booking or Property for context
